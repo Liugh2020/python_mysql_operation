@@ -1,2 +1,2 @@
 # python_mysql_operation
-python对mysql数据库进行操作
+python对mysql数据库进行操作，相关注释都在对应函数底下，传入对应的数据和参数到函数中即可。
