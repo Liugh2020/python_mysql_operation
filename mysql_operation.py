@@ -114,13 +114,5 @@ def sql_caozuo(sql, conn):
 
 if __name__=="__main__":
     # 数据库操作配置参数
-    engine_conn = 'mysql+pymysql://root:zaixian2018@172.22.142.123:3306/temp?charset=utf8'
-    pymysql_conn = {
-        'host': "172.22.142.123",
-        'port': 3306,
-        'user': "root",
-        'password': "zaixian2018",
-        'db': "temp",
-        'charset': 'utf8'
-    }
+    
 
