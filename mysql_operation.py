@@ -25,7 +25,8 @@ def df_to_sql(engine_conn, data, table_name):
         df.to_sql(name=table_name, con=engine, if_exists='append', index=False, index_label=False)
         # 关闭engine的连接
         engine.dispose()
-        # print('写入数据库成功')
+        print('写入数据库成功')
+
     except Exception as e:
         print('dataframe存入数据库失败：%s' % e)
         return None
@@ -114,5 +115,38 @@ def sql_caozuo(sql, conn):
 
 if __name__=="__main__":
     # 数据库操作配置参数
-    
+    engine_conn = 'mysql+pymysql://(mysql帐号):(帐号密码)@(ip):(端口号)/(table)?charset=utf8'
+    pymysql_conn = {
+        'host': "",  # ip地址
+        'port': 3306,  # 端口号，默认3306
+        'user': "",  # mysql帐号
+        'password': "",  # 帐号密码
+        'db': "",  # 数据库名称
+        'charset': 'utf8'  # 编码类型
+    }
+    sql = "select * from table;"
+
+    # 1、执行数据库查询语句操作
+    query_result = sql_caozuo(sql, pymysql_conn)
+    print('查询结果', query_result)
+
+    # 2、从数据库查询数据并直接变成dataframe
+    data = sql_to_df(engine_conn, sql)  # data为df转化的list，其中包含字典数据
+    print('data', data)
+
+    # 3、list插入到数据库
+    tb_name = 'test'  # 数据库中要插入的表名
+    cols = ['col1', 'col2', 'col3']  # 字段名，要跟数据库现有的字段一一对应
+    rows = ['data1', 'data2', 'data3']  # 数据行，要跟cols一一对应，注意跟数据库的字段的数据类型是否匹配
+    list_to_df_to_sql(tb_name, cols, rows, engine_conn)
+
+    # 4、dataframe插入到数据库
+    data = [{
+        'col1': 'data1',
+        'col2': 'data2',
+        'col3': 'data3'
+
+    }]  # list中装载字典数据
+    df_to_sql(engine_conn, data, tb_name)
+
 
